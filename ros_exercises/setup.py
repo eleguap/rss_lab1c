@@ -22,7 +22,8 @@ setup(
         'console_scripts': [
             'talker = ros_exercises.simple_publisher:main',
             'listener = ros_exercises.simple_subscriber:main',
-            'comptalk = ros_exercises.fake_scan_publisher:main'
+            'comptalk = ros_exercises.fake_scan_publisher:main',
+            'complist = ros_exercises.open_space_publisher:main'
         ],
     },
 )
