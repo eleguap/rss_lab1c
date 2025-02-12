@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="ros_exercises" exec="talker" output="screen"/>
+    <node pkg="ros_exercises" exec="listener" output="screen"/>
+    <node pkg="ros_exercises" exec="comptalk" output="screen"/>
+    <node pkg="ros_exercises" exec="complist" output="screen"/>
+</launch>
