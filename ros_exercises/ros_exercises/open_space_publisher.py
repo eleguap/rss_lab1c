@@ -15,6 +15,7 @@
 import rclpy
 from rclpy.node import Node
 
+from custom_msgs.msg import OpenSpace
 from std_msgs.msg import Float32
 from sensor_msgs.msg import LaserScan
 
@@ -28,22 +29,19 @@ class MinimalSubscriber(Node):
             self.listener_callback,
             10)
         self.subscription  # prevent unused variable warning
-        self.distance_publisher = self.create_publisher(Float32, 'open_space/distance', 10)
-        self.angle_publisher = self.create_publisher(Float32, 'open_space/angle', 10)
+        self.publisher_ = self.create_publisher(OpenSpace, 'open_space', 10)
 
     def listener_callback(self, msg):
-        distance = Float32()
-        angle = Float32()
+        open_space = OpenSpace()
 
         ranges = msg.ranges
         index = max(range(len(ranges)), key = lambda i: ranges[i])
 
-        distance.data = ranges[index]
-        angle.data = index * msg.angle_increment
+        open_space.angle = ranges[index]
+        open_space.distance = index * msg.angle_increment
 
-        self.distance_publisher.publish(distance)
-        self.angle_publisher.publish(angle)
-        self.get_logger().info(f"I heard and published: {distance.data}, {angle.data}")
+        self.publisher_.publish(open_space)
+        self.get_logger().info(f"I heard and published: {open_space.angle}, {open_space.distance}")
 
 
 def main(args=None):
