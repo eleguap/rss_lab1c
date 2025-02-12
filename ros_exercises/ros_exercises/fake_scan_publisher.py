@@ -23,21 +23,48 @@ class MinimalPublisher(Node):
 
     def __init__(self):
         super().__init__('fake_scan_publisher')
-        self.scan_publisher = self.create_publisher(LaserScan, 'fake_scan', 10)
+
+        self.declare_parameters(
+            namespace='',
+            parameters=[
+                ('publish_topic', "fake_scan"),
+                ('publish_rate', 0.05),
+                ('angle_min', (-2/3) * math.pi),
+                ('angle_max', (2/3) * math.pi),
+                ('range_min', 1.0),
+                ('range_max', 10.0),
+                ('angle_increment', (1/300) * math.pi)
+            ]
+        )
+
+        publish_topic, publish_rate, angle_min, angle_max, range_min, range_max, angle_increment = self.get_parameters(
+            ['publish_topic', 'publish_rate', 'angle_min', 'angle_max',
+             'range_min', 'range_max', 'angle_increment']
+        )
+
+        self.publish_topic = publish_topic.value
+        self.publish_rate = publish_rate.value
+        self.angle_min = angle_min.value
+        self.angle_max = angle_max.value
+        self.range_min = range_min.value
+        self.range_max = range_max.value
+        self.angle_increment = angle_increment.value
+
+        self.scan_publisher = self.create_publisher(LaserScan, self.publish_topic, 10)
         self.length_publisher = self.create_publisher(Float32, 'range_test', 10)
-        timer_period = 0.05  # seconds
+        timer_period = self.publish_rate  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
     def timer_callback(self):
         scan = LaserScan()
         scan.header.stamp = self.get_clock().now().to_msg()
         scan.header.frame_id = 'base_link'
-        scan.angle_min = (-2/3) * math.pi
-        scan.angle_max = (2/3) * math.pi
-        scan.angle_increment = (1/300) * math.pi
+        scan.angle_min = self.angle_min
+        scan.angle_max = self.angle_max
+        scan.angle_increment = self.angle_increment
         scan.scan_time = 1.0
-        scan.range_min = 1.0
-        scan.range_max = 10.0
+        scan.range_min = self.range_min
+        scan.range_max = self.range_max
         num_ranges = int((scan.angle_max - scan.angle_min)/scan.angle_increment) + 1
         scan.ranges = [random.uniform(scan.range_min, scan.range_max) for _ in range(num_ranges)]
 

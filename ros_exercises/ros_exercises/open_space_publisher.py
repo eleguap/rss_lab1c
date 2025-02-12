@@ -16,20 +16,31 @@ import rclpy
 from rclpy.node import Node
 
 from custom_msgs.msg import OpenSpace
-from std_msgs.msg import Float32
 from sensor_msgs.msg import LaserScan
 
 class MinimalSubscriber(Node):
 
     def __init__(self):
         super().__init__('open_space_publisher')
+
+        self.declare_parameters(
+            namespace='',
+            parameters=[
+                ('publish_topic', "open_space"),
+                ('subscribe_topic', "fake_scan")
+            ]
+        )
+
+        publish_topic, subscribe_topic = self.get_parameters(['publish_topic', 'subscribe_topic'])
+        self.publish_topic, self.subscribe_topic = publish_topic.value, subscribe_topic.value
+
         self.subscription = self.create_subscription(
             LaserScan,
-            'fake_scan',
+            self.subscribe_topic,
             self.listener_callback,
             10)
         self.subscription  # prevent unused variable warning
-        self.publisher_ = self.create_publisher(OpenSpace, 'open_space', 10)
+        self.publisher_ = self.create_publisher(OpenSpace, self.publish_topic, 10)
 
     def listener_callback(self, msg):
         open_space = OpenSpace()
