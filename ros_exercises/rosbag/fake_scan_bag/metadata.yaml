@@ -2,18 +2,18 @@ rosbag2_bagfile_information:
   version: 4
   storage_identifier: sqlite3
   relative_file_paths:
-    - rosbag2_2025_02_11-07_18_47_0.db3
+    - rosbag2_2025_02_13-05_03_47_0.db3
   duration:
-    nanoseconds: 13554789451
+    nanoseconds: 9604932880
   starting_time:
-    nanoseconds_since_epoch: 1739258327772314805
-  message_count: 272
+    nanoseconds_since_epoch: 1739423028119495800
+  message_count: 193
   topics_with_message_count:
     - topic_metadata:
         name: /fake_scan
         type: sensor_msgs/msg/LaserScan
         serialization_format: cdr
         offered_qos_profiles: "- history: 3\n  depth: 0\n  reliability: 1\n  durability: 2\n  deadline:\n    sec: 2147483647\n    nsec: 4294967295\n  lifespan:\n    sec: 2147483647\n    nsec: 4294967295\n  liveliness: 1\n  liveliness_lease_duration:\n    sec: 2147483647\n    nsec: 4294967295\n  avoid_ros_namespace_conventions: false"
-      message_count: 272
+      message_count: 193
   compression_format: ""
   compression_mode: ""
