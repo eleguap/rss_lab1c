@@ -29,8 +29,8 @@ class MinimalPublisher(Node):
             parameters=[
                 ('publish_topic', "fake_scan"),
                 ('publish_rate', 0.05),
-                ('angle_min', (-2/3) * math.pi),
-                ('angle_max', (2/3) * math.pi),
+                ('angle_min', -2 * math.pi/3),
+                ('angle_max', 2 * math.pi/3),
                 ('range_min', 1.0),
                 ('range_max', 10.0),
                 ('angle_increment', (1/300) * math.pi)
@@ -65,7 +65,7 @@ class MinimalPublisher(Node):
         scan.scan_time = 1.0
         scan.range_min = self.range_min
         scan.range_max = self.range_max
-        num_ranges = int((scan.angle_max - scan.angle_min)/scan.angle_increment) + 1
+        num_ranges = int((scan.angle_max - scan.angle_min)/scan.angle_increment) + 2
         scan.ranges = [random.uniform(scan.range_min, scan.range_max) for _ in range(num_ranges)]
 
         length = Float32()
