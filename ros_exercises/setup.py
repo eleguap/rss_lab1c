@@ -10,7 +10,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch', ['launch/my_first_launch.launch.xml']),
+        ('share/' + package_name + '/launch', ['launch/my_first_launch.launch.xml', 'launch/static_tf_publisher.launch.xml']),
+
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -24,7 +25,10 @@ setup(
             'talker = ros_exercises.simple_publisher:main',
             'listener = ros_exercises.simple_subscriber:main',
             'comptalk = ros_exercises.fake_scan_publisher:main',
-            'complist = ros_exercises.open_space_publisher:main'
+            'complist = ros_exercises.open_space_publisher:main',
+            'dynamic = ros_exercises.dynamic_tf_cam_publisher:main',
+            'static = ros_exercises.static_tf_cam_publisher:main',
+            'base2 = ros_exercises.base_link_tf_pub:main',
         ],
     },
 )

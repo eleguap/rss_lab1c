@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="ros_exercises" exec="static" output="screen"/>
+    <node pkg="ros_exercises" exec="base2" output="screen"/>
+</launch>
